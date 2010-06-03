@@ -224,6 +224,58 @@ package flight.net
 			return this;
 		}
 		
+
+
+
+		public function bindResult( target : Object, targetPath : Object ) : IResponse
+		{
+			addResultHandler( bindResultHandler, target, targetPath );
+			return this;
+		}
+
+
+		protected function bindResultHandler( result : *, target : Object, targetPath : Object ) : void
+		{
+			var path : Array, propertyName : String, endTarget : Object;
+			path = makePath( targetPath );
+
+			endTarget = getEndTarget( target, path );
+			propertyName = path[ path.length - 1 ];
+
+			if( endTarget != null )
+				endTarget[ propertyName ] = result;
+		}
+
+
+		protected function makePath( value : Object ) : Array
+		{
+			if( value is String )
+			{
+				return String( value ).split( "." );
+			}
+			else if( value is Array )
+			{
+				return value as Array;
+			}
+			else if( value != null )
+			{
+				return [ value ];
+			}
+			return [];
+		}
+
+		protected function getEndTarget( target : Object, targetPath : Array ) : Object
+		{
+			if( target == null )
+				return null;
+
+			if( targetPath.length == 1 )
+				return target;
+
+			return getEndTarget( target[ targetPath.shift()], targetPath );
+		}
+
+
 		/**
 		 * Adds a callback handler to be invoked with the failure of the
 		 * response, receiving an error.

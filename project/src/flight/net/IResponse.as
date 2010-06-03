@@ -110,6 +110,9 @@ package flight.net
 		 */
 		function removeResultHandler(handler:Function):IResponse;
 		
+
+		function bindResult( target : Object, targetPath : Object ) : IResponse;
+
 		/**
 		 * Adds a callback handler to be invoked with the failure of the
 		 * response, receiving an error.
