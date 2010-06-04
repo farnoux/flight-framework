@@ -103,7 +103,6 @@ package flight.utils
 			
 			// remove ties to the old source
 			if (_source != null) {
-				_target = null;
 				if (_source is IEventDispatcher) {
 					IEventDispatcher(_source).removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onChange);
 					IEventDispatcher(_target).removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onChange);
@@ -115,6 +114,7 @@ package flight.utils
 					Registry.unregister(_source, ObjectEditor);
 					Registry.unregister(_target, ObjectEditor);
 				}
+				_target = null;
 			}
 			
 			_source = value;
@@ -124,11 +124,10 @@ package flight.utils
 				if (registered != null) {
 					_target = registered._target;
 				} else {
-					Registry.register(_source, this, ObjectEditor);
-					Registry.register(_target, this, ObjectEditor);
 					// create the new target
-					_target = (_source is IValueObject) ? IValueObject(_source).clone()
-													   : ValueObject.clone(_source);
+					_target = ( _source is IValueObject ) ? IValueObject( _source ).clone() : ValueObject.clone( _source );
+					Registry.register( _source, this, ObjectEditor );
+					Registry.register( _target, this, ObjectEditor );
 				}
 				
 				if (_source is IEventDispatcher) {
