@@ -88,7 +88,7 @@ package flight.net
 			}
 		}
 		
-		public function destory():void
+		public function destroy() : void
 		{
 			release();
 			while(resultHandlers.length) resultHandlers.pop();
