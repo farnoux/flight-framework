@@ -173,5 +173,13 @@ package flight.net
 		 */
 		function cancel(error:Error):void;
 		
+		/**
+		 * Handles the fault coming from a responder and turns it into an error
+		 * object.
+		 *
+		 * @param	data			The faulting data object.
+		 */
+		function handleResponderFault( data : Object ) : void;
+
 	}
 }
