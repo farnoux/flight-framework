@@ -194,9 +194,13 @@ package flight.net
 		 */
 		public function addResultHandler(handler:Function, ... resultParams):IResponse
 		{
-			resultParams.unshift(handler);
-			resultHandlers.push(resultParams);
-			if (status == ResponseStatus.RESULT) {
+			if( resultParams.length == 1 && resultParams[ 0 ] is Array )
+				resultParams = resultParams[ 0 ];
+
+			resultParams.unshift( handler );
+			resultHandlers.push( resultParams );
+			if( status == ResponseStatus.RESULT )
+			{
 				runHandlers();
 			}
 			return this;
@@ -311,9 +315,13 @@ package flight.net
 		 */
 		public function addFaultHandler(handler:Function, ... faultParams):IResponse
 		{
-			faultParams.unshift(handler);
-			faultHandlers.push(faultParams);
-			if (status == ResponseStatus.FAULT) {
+			if( faultParams.length == 1 && faultParams[ 0 ] is Array )
+				faultParams = faultParams[ 0 ];
+
+			faultParams.unshift( handler );
+			faultHandlers.push( faultParams );
+			if( status == ResponseStatus.FAULT )
+			{
 				runHandlers();
 			}
 			return this;
